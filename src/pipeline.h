@@ -30,7 +30,7 @@ class Pipeline
 {
 public:
     Pipeline(const VulkanDevice* vkdev);
-    ~Pipeline();
+    virtual ~Pipeline();
 
 public:
     void set_optimal_local_size_xyz(int w = 32, int h = 32, int c = 32);
@@ -80,12 +80,10 @@ public:
     int create(AHardwareBuffer* hb, int type_to, int rotate_from, const Option& opt);
     void destroy();
 
-    int create_image_memory_imageview(AHardwareBuffer* hb, VkImage* image, VkDeviceMemory* memory, VkImageView* imageView);
-
     friend class VkCompute;
 
 protected:
-    int create_sampler();
+    int create_sampler(AHardwareBuffer* hb);
     int create_descriptorset_layout();
     int create_descriptor_update_template();
 
@@ -99,8 +97,6 @@ public:
     int out_elempack;
     int type_to;
     int rotate_from;
-    VkAndroidHardwareBufferFormatPropertiesANDROID bufferFormatProperties;
-    VkAndroidHardwareBufferPropertiesANDROID bufferProperties;
 
     VkSamplerYcbcrConversionKHR samplerYcbcrConversion;
     VkSampler sampler;
